@@ -1,0 +1,37 @@
+.form-group {
+  display: flex;
+}
+
+.form-group label {
+  margin: auto;
+  width: 50%;
+}
+
+.form-control label,
+.form-control input,
+.form-control textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.form-control input,
+.form-control textarea {
+  border: 1px solid #a1a1a1;
+  font: inherit;
+  border-radius: 2px;
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
+  outline-color: #00695c;
+}
+
+.checkinForm {
+  width: 38%;
+}
+
+.btn .primary {
+  display: block;
+  margin: auto;
+}

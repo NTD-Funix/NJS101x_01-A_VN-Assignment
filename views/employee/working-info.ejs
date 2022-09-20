@@ -1,0 +1,171 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main class="py-0">
+        <div class="grid">
+            <article class="card index-item my-0">
+                <div class="container"> 
+                    <hr>
+                    <header class="card__header row pb-0">
+                        <% if(!salaryMonth) { %>
+                            <h4 class="index__title col-lg-6 align-self-center"><em>Tra cứu lương tháng</em></h4>
+                            <div class="col-lg-6 align-self-center">
+                                <form action="/workingInformation" class="row">
+                                    <div class="col-sm-4 mb-3 align-self-center text-center">
+                                        <label for="salaryInfo" class="align-self-auto">Chọn tháng:</label>
+                                    </div>
+                                    <div class="col-sm-4 mb-3">
+                                        <input type="month" class="form-control" id="salaryMonth" name="salaryMonth">
+                                    </div>
+                                    <div class="col-sm-4 text-center">
+                                        <button type="submit" class="btn btn-primary w-auto">Xem chi tiết</button>
+                                    </div>
+                                </form>
+                            </div>
+                        <% } else { %>
+                            <% if (workingTimeItemsOfMonth.length > 0) { %>
+                            <h4 class="index__title text-center">
+                                <em>Bảng lương tháng 
+                                    <%= salaryMonth.split('-')[1] %>/<%= salaryMonth.split('-')[0] %>
+                                </em>
+                            </h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" 
+                                    style="display: block; 
+                                            border: 1px solid green; 
+                                            max-height: 300px; 
+                                            overflow-y: scroll;
+                                            width: fit-content;
+                                            margin: 0 auto;">
+                                    <thead>
+                                        <tr class="table-success text-center">
+                                            <th>Bậc lương</th>
+                                            <th>Tổng số giờ làm thêm của tháng</th>
+                                            <th>Tổng số giờ làm thiếu của tháng</th>
+                                            <th>Lương tháng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td > <%= employee.salaryScale %></td>
+                                            <td ><%= totalOverTimeOfMonth %> Giờ</td>
+                                            <td ><%= totalLessTimeOfMonth %> Giờ</td>
+                                            <td ><%= salary %></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <span class="mt-2 text-center"> 
+                                <em>* Lương = Bậc lương * 3000000 + (Tổng số giờ làm thêm - Tổng số giờ làm thiếu) * 200000.</em>
+                            </span>
+                            <span class="text-center">
+                                <em>* Số giờ làm còn thiếu là khi chưa đủ 8h/ngày kể cả đã cộng annualLeave của ngày đó.</em>
+                            </span>
+                            <% } else { %>
+                            <h4 class="index__title text-center">
+                                <em>Không có dữ liệu cho tháng  
+                                    <%= salaryMonth.split('-')[1] %>/<%= salaryMonth.split('-')[0] %>.
+                                    Vui lòng chọn lại tháng khác !
+                                </em>
+                            </h4>
+                            <div class=" align-self-center">
+                                <form action="/workingInformation">
+                                    <div class=" mb-3">
+                                        <input type="month" class="form-control" id="salaryMonth" name="salaryMonth">
+                                    </div>
+                                    <div class=" text-center">
+                                        <button type="submit" class="btn btn-primary w-auto">Xem chi tiết</button>
+                                    </div>
+                                </form>
+                            </div>
+                        <% } %>
+                        <% } %>
+                    </header>
+                    <hr>
+                    <h4 class="text-center mb-4"><em>Bảng thông tin chi tiết giờ làm</em></h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" 
+                            style="display: block; 
+                                    border: 1px solid green; 
+                                    max-height: 300px; 
+                                    overflow-y: scroll;
+                                    width: fit-content;
+                                    margin: 0 auto;">
+                            <thead>
+                                <tr class="table-success text-center">
+                                    <th>Ngày làm việc</th>
+                                    <th>Nghỉ phép đã đăng ký</th>
+                                    <th>Số giờ làm của ngày</th>
+                                    <th>Số giờ làm thêm</th>
+                                    <th>Thời gian bắt đầu</th>
+                                    <th>Thời gian kết thúc</th>
+                                    <th>Nơi làm việc</th>
+                                    <th>Số giờ đã làm lần này</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% employee.workingTimes.Items.forEach(item => { %>
+                                    <% if (item.detailsTime.length > 0) { %>
+                                        <tr class="text-center">
+                                            <td rowspan="<%= item.detailsTime.length + 1 %>">
+                                                <%= item.dateTime %>
+                                            </td>
+                                            <td rowspan="<%= item.detailsTime.length + 1 %>">
+                                                <%= item.annualLeaveRegisted %> Giờ
+                                            </td>
+                                            <td rowspan="<%= item.detailsTime.length + 1 %>">
+                                                <%= item.detailsTime[item.detailsTime.length - 1].endTime !== '--' ? 
+                                                    item.totalTimeWorking + item.annualLeaveRegisted : '--' %> Giờ
+                                            </td>
+                                            <td rowspan="<%= item.detailsTime.length + 1 %>">
+                                                <%= item.detailsTime[item.detailsTime.length - 1].endTime !== '--' ? 
+                                                    item.overTime : '--' %> Giờ
+                                            </td>
+                                        </tr>
+                                        <% item.detailsTime.forEach(i => { %>
+                                        <tr class="text-center">
+                                            <td>
+                                                <%=i.startTime.toISOString().split('T')[1].split('.')[0]%>
+                                            </td>
+                                            <td><%= i.endTime === '--' ? 
+                                                '--' : 
+                                                i.endTime.toISOString().split('T')[1].split('.')[0] %>
+                                            </td>
+                                            <td><%= i.workPlace %></td>
+                                            <td><%= i.totalTime === 0 ? 
+                                                'Chưa kết thúc' : 
+                                                i.totalTime %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    <% } else { %>
+                                        <tr class="text-center">
+                                            <td > <%= item.dateTime %></td>
+                                            <td ><%= item.annualLeaveRegisted %> Giờ</td>
+                                            <td ><%= item.annualLeaveRegisted + item.totalTimeWorking %> Giờ</td>
+                                            <td ><%= item.overTime %></td>
+                                            <td>--</td>
+                                            <td>--</td>
+                                            <td>--</td>
+                                            <td>--</td>
+                                        </tr>
+                                    <% } %>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                </div>
+            </article>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<%- include('../includes/end.ejs') %>
+
+

@@ -1,0 +1,49 @@
+<div class="backdrop"></div>
+<header class="main-header">
+  <button id="side-menu-toggle">Menu</button>
+  <nav class="main-header__nav">
+    <ul class="main-header__item-list">
+      <li class="main-header__item">
+        <a class="<%= path === '/' ? 'active' : ''%>" href="/">Điểm danh</a>
+      </li>
+      <li class="main-header__item">
+        <a
+          class="<%= path === '/employeeInformation' ? 'active' : ''%>"
+          href="/employeeInformation"
+          >Thông tin cá nhân</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          href="/workingInformation"
+          class="<%= path === '/workingInformation' ? 'active' : ''%>"
+          >Tra cứu thông tin giờ làm</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          href="/covidInformation"
+          class="<%= path === '/covidInformation' ? 'active' : ''%>"
+          >Thông tin COVID-19</a
+        >
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="mobile-nav">
+  <ul class="mobile-nav__item-list">
+    <li class="mobile-nav__item">
+      <a href="/">Điểm danh</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a href="/employeeInformation">Thông tin cá nhân</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a href="/workingInformation">Tra cứu thông tin giờ làm</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a href="/covidInformation">Thông tin COVID-19</a>
+    </li>
+  </ul>
+</nav>
