@@ -1,0 +1,43 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <div class="grid">
+            <article class="card index-item" style="width:600px">
+                <header class="card__header">
+                    <h1 class="index__title">Đăng ký thông tin tiêm Vaccine</h1>
+                </header>
+                <hr>
+                <div class="container">
+                    <form action="/post-vaccination" method="POST">
+                        <div class="mb-3 row">
+                            <label for="vaccinationTimes" class="col-md-4">Mũi số:</label>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control" value="<%= employee.covidInfos.vaccines.length + 1%>" disabled>
+                            </div> 
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="vaccineType" class="col-md-4">Loại Vaccine:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="vaccineType" name="vaccineType">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="injectDate" class="col-md-4">Ngày tiêm:</label>
+                            <div class="col-md-8">
+                                <input type="date" class="form-control" id="injectDate" name="injectDate">
+                            </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

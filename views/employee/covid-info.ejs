@@ -1,0 +1,118 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+
+  <body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+      <div class="grid">
+        <article class="card index-item">
+          <header class="card__header">
+            <% if(!isManager) {%>
+            <h1 class="index__title">Thông tin COVID-19 cá nhân</h1>
+            <% } else { %>
+            <h1 class="index__title">Thông tin COVID-19 cá nhân - <%= employee.name %></h1>
+            <% } %>
+          </header>
+          <hr>
+          <div class="row px-3">
+            <div class="col-lg-4">
+                <h5 class="text-center">Thông tin thân nhiệt</h5>
+                <hr>
+                <% if (temps.length > 0) { %>
+                    <table class="table table-bordered">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Ngày/giờ đăng ký</th>
+                            <th>Nhiệt độ (độ C)</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            <% for(let temp of temps) { %>
+                                <tr class="<%= temp.tempValue >= '38.5' ? 'table-danger' : 'table-success' %>">
+                                    <td><%= temp.tempDate %></td>
+                                    <td><%= temp.tempValue %></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                <% } else { %>
+                    <p>Chưa có dữ liệu</p>
+                <% } %>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="text-center">Thông tin tiêm Vaccine</h5>
+                <hr>
+                <% if (vaccinations.length > 0) { %>
+                    <table class="table table-bordered">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Mũi Vaccine</th>
+                            <th>Loại Vaccine</th>
+                            <th>Ngày tiêm</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            <% for(let vaccination of vaccinations) { %>
+                                <tr>
+                                    <td><%= vaccination.times %></td>
+                                    <td><%= vaccination.vaccineType %></td>
+                                    <td><%= vaccination.injectDate %></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                <% } else { %>
+                    <p>Chưa có dữ liệu</p>
+                <% } %>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="text-center">Thông tin dương tính</h5>
+                <hr>
+                <% if (positives.length > 0) { %>
+                    <div>
+                        <table class="table table-bordered">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>Lần nhiễm</th>
+                                <th>Ngày nhiễm</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <% for(let positive of positives) { %>
+                                    <tr>
+                                        <td><%= positive.times %></td>
+                                        <td><%= positive.positiveDate %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <p>Chưa có dữ liệu</p>
+                    <% } %>
+                    </div>
+            </div>
+          </div>
+          <hr>
+          <% if(!isManager) { %>
+            <div class="row mx-2">
+            <div class="col-md-4 mb-3">
+                <a href="/registerTemp" class="btn btn-success">Đăng ký thông tin thân nhiệt</a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="/registerVaccination" class="btn btn-primary">Đăng ký thông tin tiêm Vaccine</a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="/registerPositive" class="btn btn-danger">Đăng ký thông tin dương tính với COVID-19</a>
+            </div>
+          </div>
+          <% } else { %>
+            <div class="mb-3 text-center">
+                <a href="/view-covid-info/print/<%= employee._id %>" class="btn btn-warning w-auto">In thông tin Covid</a>
+            </div>
+          <% } %>
+        
+        </article>
+      </div>
+    </main>
+<%- include('../includes/end.ejs') %>

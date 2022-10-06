@@ -1,0 +1,57 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <div class="grid">
+            <article class="card index-item" style="width:800px">
+                <header class="card__header">
+                    <h1 class="index__title">Cập nhật thông tin cá nhân</h1>
+                </header>
+                <hr>
+                <div class="container">
+                    <form action="/edit-employee-info" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3 mx-3 row">
+                            <label for="employeeId" class="col-md-4">ID:</label>
+                            <input type="text" class="col-md-8" id="employeeId" name="employeeId" value="<%= employee._id %>" disabled>
+                        </div>
+                        <div class="mb-3 mx-3 row">
+                            <label for="name" class="col-md-4">Họ và tên:</label>
+                            <input type="text" class="col-md-8" id="name" name="name" value="<%= employee.name %>" disabled>
+                        </div>
+                        <div class="mb-3 mx-3 row">
+                            <label for="doB" class="col-md-4">Ngày sinh:</label>
+                            <input type="text" class="col-md-8" id="doB" name="doB" value="<%= employee.doB %>" disabled>
+                        </div>
+                        <div class="mb-3 mx-3 row">
+                            <label for="salaryScale" class="col-md-4">Bậc lương: </label>
+                            <input type="text" class="col-md-8" id="salaryScale" name="salaryScale" value="<%= employee.salaryScale %>" disabled>
+                        </div>
+                        <div class="mb-3 mx-3 row">
+                            <label for="startDate" class="col-md-4">Ngày bắt đầu:</label>
+                            <input type="text" class="col-md-8" id="startDate" name="startDate" value="<%= employee.startDate %>" disabled>
+                        </div>
+                        <div class="mb-3 mx-3 row">
+                            <label for="department" class="col-md-4">Phòng ban: </label>
+                            <input type="text" class="col-md-8" id="department" name="department" value="<%= employee.department %>" disabled>
+                        </div>
+                        <div class="mb-3 mx-3 row">
+                            <label for="annualLeave" class="col-md-4">Số ngày nghỉ phép còn lại: </label>
+                            <input type="text" class="col-md-8" id="annualLeave" name="annualLeave" value="<%= employee.annualLeave %>" disabled>
+                        </div>
+                        <div class="mb-3 mx-3 row">
+                            <label for="image" class="col-md-4">Image: </label>
+                            <input type="file" class="col-md-8" id="image" name="image">
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary mb-4" style="width: auto; display: block; margin: auto">Cập nhật thông tin</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

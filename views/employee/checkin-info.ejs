@@ -1,0 +1,68 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <div class="grid">
+            <article class="card index-item" style="width:700px">
+                <header class="card__header">
+                    <h1 class="index__title">Checkin Info</h1>
+                </header>
+                <hr>
+                <div class="container">
+                    <% if(!workingInfo) { %>
+                    <div class="user-message user-message--error mb-3">
+                        Tháng <%= monthOfWorking %> đã được quản lý xác nhận. Bạn không thể thêm giờ làm!
+                    </div>
+                    <div class="text-center mb-4">
+                        <a href="/" class="btn btn-primary w-50" >Trang chủ</a>
+                    </div>
+                    <% } else {%>
+                    <form action="check-out" method="POST">
+                        <div class="mb-3 row">
+                            <label class="col-md-4" for="name">Họ và tên:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" value="<%= employee.name %>" disabled>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4" for="workPlace">Nơi làm việc:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" value="<%= workingInfo.workPlace %>" disabled>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4" for="startTime">Thời gian bắt đầu: </label>
+                            <div class="col-md-8">
+                                <input type="text" 
+                                    class="form-control" 
+                                    value="<%= workingInfo.startTime.toISOString() %>" 
+                                    disabled >
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4" for="status">Trạng thái: </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" value="<%= status === 1 ? 'Đang làm việc' : 'Không làm việc' %>" disabled>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 text-center mb-3">
+                                <a href="/" class="btn btn-primary w-75" >Trang chủ</a>
+                            </div>
+                            <div class="col-md-6 text-center ">
+                                <button type="submit" class="btn btn-danger mb-3 w-75">Kết thúc làm</button>
+                            </div>
+                        </div>
+                    </form>
+                    <%}%>
+                </div>
+            </article>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

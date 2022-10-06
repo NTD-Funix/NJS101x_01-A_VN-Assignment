@@ -1,0 +1,122 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/index.css">
+        <link rel="stylesheet" href="/css/forms.css">
+        </head>
+
+        <body>
+            <%- include('../includes/navigation.ejs') %>
+            <main class="py-0">
+                <div class="grid">
+                    <article class="card index-item">
+                        <header class="card__header row pb-0">
+                            <h4 class="text-center col-lg-6 align-self-center"><em>Bảng thông tin chi tiết giờ làm - <%= employee.name%></em></h4>
+                            <div class="col-lg-6">
+                                <form action="/confirm/view/<%= employeeViewId %>" class="row">
+                                    <div class="col-sm-3 m-auto text-center">
+                                        <label for="sel" class="form-label m-0">Chọn tháng:</label>
+                                    </div>
+                                    <div class="col-sm-5 my-2">
+                                        <input type="month" class="form-control" name="monthView" value="<%= monthView %>">
+                                    </div>
+                                    <div class="col-sm-3 my-2 text-center">
+                                        <button type="submit" class="btn btn-primary w-auto">Xem</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </header>
+                        <hr>
+                        <% if(monthView) { %>
+                        <h4 class="text-center align-self-center">
+                            <em>Tháng <%= monthView %></em>
+                        </h4>
+                        <% } else { %>
+                        <h4 class="text-center">
+                            <em>Toàn bộ quá trình làm việc.</em>
+                        </h4>
+                        <%}%>
+                        <% if(timeWorks.length > 0) { %>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" 
+                                style="border: 1px solid green">
+                                <thead>
+                                    <tr class="table-success text-center">
+                                        <th>Ngày làm việc</th>
+                                        <th>Nghỉ phép</th>
+                                        <th>Số giờ làm của ngày</th>
+                                        <th>Số giờ làm thêm</th>
+                                        <th>Thời gian bắt đầu</th>
+                                        <th>Thời gian kết thúc</th>
+                                        <th>Nơi làm việc</th>
+                                        <th>Số giờ đã làm lần này</th>
+                                        <% if (monthView) { %>
+                                        <th>Action</th>
+                                        <% } %>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% timeWorks.forEach(item => { %>
+                                        <tr class="text-center">
+                                            <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                                <%= item.dateTime %>
+                                            </td>
+                                            <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                                <%= item.annualLeaveOfDay %> Giờ
+                                            </td>
+                                            <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                                <%= item.totalTimeOfDay %> Giờ
+                                            </td>
+                                            <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                                <%= item.overTime %> Giờ
+                                            </td>
+                                        </tr>
+                                        <% item.workingTimes.forEach(i => { %>
+                                        <tr class="text-center">
+                                            <td>
+                                                <%=i.startTime.toISOString().split('T')[1].split('.')[0]%>
+                                            </td>
+                                            <td><%= i.endTime ? i.endTime.toISOString().split('T')[1].split('.')[0] : '--' %>
+                                            </td>
+                                            <td><%= i.workPlace %></td>
+                                            <td><%= i.totalTime === 0 ? 
+                                                'Chưa kết thúc' : 
+                                                i.totalTime %>
+                                            </td>
+                                            <% if (monthView) { %>
+                                            <td class="m-0">
+                                                <form action="/confirm/delete-work-item" method="POST">
+                                                    <input type="hidden" name="employeeId" value="<%= employeeViewId %>">
+                                                    <input type="hidden" name="dateOfItem" value="<%= i.startTime.toISOString().split('T')[0] %>">
+                                                    <input type="hidden" name="workItemId" value="<%= i._id %>">
+                                                    <input type="hidden" name="monthDelete" value="<%= monthView %>">
+                                                    <button type="submit" 
+                                                        class="btn btn-sm w-auto <%= confirmed >= 0 ? 'disabled btn-primary' : 'btn-danger' %> ">
+                                                        <%= confirmed >= 0 ? 'Confirmed' : 'Delete' %>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <% } %>
+                                        </tr>
+                                        <% }) %>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% if(monthView) {%>
+                        <form action="/confirm/confirmed" class="text-center mb-2" method="POST">
+                            <input type="hidden" name="employeeId" value="<%= employeeViewId %>">
+                            <input type="hidden" name="monthCofirmed" value="<%= monthView %>">
+                            <button type="submit" 
+                                class="btn w-auto <%= confirmed >= 0 ? 'disabled btn-primary' : 'btn-success' %>">
+                                <%= confirmed >= 0 ? 'Đã xác nhận' : 'Xác nhận' %>
+                            </button>
+                        </form>
+                        <% } %>
+                        <% } else { %>
+                        <h4 class="text-center text-danger"><em>Không có dữ liệu!</em></h4>
+                        <% } %>
+                    </article>
+                </div>
+            </main>
+<%- include('../includes/end.ejs') %>
+
+

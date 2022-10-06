@@ -1,0 +1,32 @@
+<section class="pagination">
+  <% if (currentPage !== 1 && previousPage !== 1) {%>
+  <a href="?sortValue=<%= sortValue %>&pagination=<%= pagination %>&page=1">
+    1
+  </a>
+  <% } %> <% if(hasPreviousPage) {%>
+  <a
+    href="?sortValue=<%= sortValue %>&pagination=<%= pagination %>&page=<%= previousPage%>"
+  >
+    <%= previousPage %>
+  </a>
+  <% } %>
+  <a
+    href="?sortValue=<%= sortValue %>&pagination=<%= pagination %>&page=<%= currentPage%>"
+    class="active"
+  >
+    <%= currentPage %>
+  </a>
+  <% if(hasNextPage) {%>
+  <a
+    href="?sortValue=<%= sortValue %>&pagination=<%= pagination %>&page=<%= nextPage%>"
+  >
+    <%= nextPage %>
+  </a>
+  <% } %> <% if(lastPage !== currentPage && nextPage !== lastPage) {%>
+  <a
+    href="?sortValue=<%= sortValue %>&pagination=<%= pagination %>&page=<%= lastPage%>"
+  >
+    <%= lastPage %>
+  </a>
+  <% } %>
+</section>

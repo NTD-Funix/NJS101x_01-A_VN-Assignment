@@ -1,0 +1,41 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <div class="grid">
+            <article class="card index-item" style="width:600px">
+                <header class="card__header">
+                    <h1 class="index__title">Điểm danh</h1>
+                </header>
+                <hr>
+                <div class="container">
+                    <form action="/checkin-success" method="POST">
+                        <div class="mb-3 row">
+                            <label for="name" class="col-md-4">Họ và tên:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="name" name="name" value="<%= employee.name %>" disabled>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="workPlace" class="col-md-4">Chọn nơi làm việc:</label>
+                                <div class="col-md-8">
+                                    <select name="workPlace" class="form-select" id="workPlace">
+                                        <option value="Công ty" selected>Công ty</option>
+                                        <option value="Tại nhà">Tại nhà</option>
+                                        <option value="Khách hàng">Khách hàng</option>
+                                    </select>
+                                </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

@@ -1,0 +1,108 @@
+<div class="backdrop"></div>
+<header class="main-header">
+  <button id="side-menu-toggle">Menu</button>
+  <nav class="main-header__nav">
+    <ul class="main-header__item-list">
+      <li class="main-header__item">
+        <a class="<%= path === '/' ? 'active' : ''%>" href="/">Trang chủ</a>
+      </li>
+      <% if(!isAuthenticated || !isManager) { %>
+      <li class="main-header__item">
+        <a
+          class="<%= path === '/check-in-out' ? 'active' : ''%>"
+          href="/check-in-out"
+          >Điểm danh</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          class="<%= path === '/employeeInformation' ? 'active' : ''%>"
+          href="/employeeInformation"
+          >Thông tin cá nhân</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          href="/workingInformation"
+          class="<%= path === '/workingInformation' ? 'active' : ''%>"
+          >Tra cứu thông tin giờ làm</a
+        >
+      </li>
+      <% } %> <% if(!isAuthenticated || !isManager || isManager) {%>
+      <li class="main-header__item">
+        <a
+          href="<%= !isManager ? '/covidInformation' : '/view-covid-info' %>"
+          class="<%= path === '/covidInformation' ? 'active' : path === '/view-covid-info' ? 'active' : '' %>"
+          >Thông tin COVID-19</a
+        >
+      </li>
+      <% } %> <% if (!isAuthenticated || isManager) { %>
+      <li class="main-header__item">
+        <a href="/confirm" class="<%= path === '/confirm' ? 'active' : ''%>"
+          >Xác nhận giờ làm</a
+        >
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+  <nav class="main-header__nav">
+    <ul class="main-header__item-list">
+      <% if (!isAuthenticated) { %>
+      <li class="main-header__item">
+        <a class="<%= path === '/login' ? 'active' : ''%>" href="/login"
+          ><i class="fa-solid fa-right-to-bracket"></i> Login</a
+        >
+      </li>
+      <% } else { %>
+      <li class="main-header__item">
+        <form action="/logout" method="POST">
+          <button type="submit">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </form>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>
+
+<nav class="mobile-nav">
+  <ul class="mobile-nav__item-list">
+    <li class="mobile-nav__item">
+      <a href="/">Trang chủ</a>
+    </li>
+    <% if(!isAuthenticated || !isManager) { %>
+    <li class="mobile-nav__item">
+      <a href="/check-in-out">Điểm danh</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a href="/employeeInformation">Thông tin cá nhân</a>
+    </li>
+    <li class="mobile-nav__item">
+      <a href="/workingInformation">Tra cứu thông tin giờ làm</a>
+    </li>
+    <% } %> <% if(!isAuthenticated || !isManager || isManager) {%>
+    <li class="mobile-nav__item">
+      <a href="<%= !isManager ? '/covidInformation' : '/view-covid-info' %>"
+        >Thông tin COVID-19</a
+      >
+    </li>
+    <% } %> <% if (!isAuthenticated || isManager) { %>
+    <li class="mobile-nav__item">
+      <a href="/confirm">Xác nhận giờ làm</a>
+    </li>
+    <% } %> <% if(!isAuthenticated) { %>
+    <li class="mobile-nav__item">
+      <a href="/login"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    </li>
+    <% } else { %>
+    <li class="mobile-nav__item">
+      <form action="/logout" method="POST">
+        <button type="submit">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </form>
+    </li>
+    <% } %>
+  </ul>
+</nav>

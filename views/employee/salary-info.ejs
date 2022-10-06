@@ -1,0 +1,84 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="py-0">
+        <div class="grid">
+            <article class="card index-item">
+                <header class="card__header row pb-0">
+                    <%- include('../includes/navs.ejs')%>
+                </header>
+                <div class="col-lg-6 align-self-center">
+                    <form action="/workingInformation/salary-info" class="row">
+                        <div class="col-sm-4 mb-3 align-self-center text-center">
+                            <label for="salaryInfo" class="align-self-auto">Chọn tháng cần xem:</label>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <input type="month" class="form-control" id="salaryMonth" value="<%= salaryMonth%>" name="salaryMonth">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <button type="submit" class="btn btn-primary w-auto">Xem chi tiết</button>
+                        </div>
+                    </form>
+                </div>
+                <hr>
+                <% if(!salaryMonth) { %>
+                <h4 class="text-center mb-4"><em>Vui lòng chọn tháng cần xem</em></h4>
+                <% } else { %>
+                <% if (workingTimeItemsOfMonth.length > 0) { %>
+                <h4 class="index__title text-center">
+                    <em>Bảng lương tháng 
+                        <%= salaryMonth.split('-')[1] %>/<%= salaryMonth.split('-')[0] %>
+                    </em>
+                </h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered" 
+                        style="display: block; 
+                                border: 1px solid green; 
+                                max-height: 300px; 
+                                overflow-y: scroll;
+                                width: fit-content;
+                                margin: 0 auto;">
+                        <thead>
+                            <tr class="table-success text-center">
+                                <th>Bậc lương</th>
+                                <th>Tổng số giờ làm thêm của tháng</th>
+                                <th>Tổng số giờ làm thiếu của tháng</th>
+                                <th>Lương tháng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <td > <%= employee.salaryScale %></td>
+                                <td ><%= totalOverTimeOfMonth %> Giờ</td>
+                                <td ><%= totalLessTimeOfMonth %> Giờ</td>
+                                <td ><%= salary %></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <span class="mt-2 text-center"> 
+                    <em>* Lương = Bậc lương * 3000000 + (Tổng số giờ làm thêm - Tổng số giờ làm thiếu) * 200000.</em>
+                </span>
+                <span class="text-center">
+                    <em>* Số giờ làm còn thiếu là khi chưa đủ 8h/ngày kể cả đã cộng annualLeave của ngày đó.</em>
+                </span>
+                <% } else { %>
+                <h5 class="index__title text-center text-danger">
+                    <em>Không có dữ liệu cho tháng  
+                        <%= salaryMonth.split('-')[1] %>/<%= salaryMonth.split('-')[0] %>.
+                        Vui lòng chọn lại tháng khác !
+                    </em>
+                </h5>
+                <% } %>
+                <% } %>
+
+            </article>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>
+
+

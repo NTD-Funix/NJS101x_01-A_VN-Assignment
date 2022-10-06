@@ -1,0 +1,46 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="py-0">
+        <div class="grid">
+            <article class="card index-item">
+                <header class="card__header row pb-0">
+                    <%- include('../includes/navs.ejs')%>
+                </header>
+                <h4 class="text-center mb-4"><em>Thông tin tổng quát</em></h4>
+                <div class="row w-50 m-auto">
+                    <div class="col-12 mb-3">
+                        <div class="row">
+                            <label for="employeeId" class="col-lg-4 text-center">ID nhân viên:</label>
+                            <input type="text" class="col-lg-8" id="employeeId" name="employeeId" value="<%= employee._id %>" disabled>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="row">
+                            <label for="employeeName" class="col-lg-4 text-center">Họ và tên nhân viên:</label>
+                            <input type="text" class="col-lg-8" id="employeeName" name="employeeName" value="<%= employee.name %>" disabled>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="row">
+                            <label for="managerId" class="col-lg-4 text-center">ID quản lý:</label>
+                            <input type="text" class="col-lg-8" id="managerId" name="managerId" value="<%= employee.managerId._id %>" disabled>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="row">
+                            <label for="managerName" class="col-lg-4 text-center">Họ và tên quản lý: </label>
+                            <input type="text" class="col-lg-8" id="managerName" name="managerName" value="<%= employee.managerId.name %>" disabled>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>
+
+

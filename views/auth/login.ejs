@@ -1,0 +1,40 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+            <% if(errorMessage) { %>
+            <div class="user-message user-message--error mb-3"><%= errorMessage %></div>
+            <% } %>
+            <div class="grid">
+                <article class="card index-item" style="width:800px">
+                    <header class="card__header">
+                        <h2 class="index__title text-center">Đăng nhập</h2>
+                    </header>
+                    <hr class="m-0">
+                    <form action="/login" class="w-75 m-auto pb-5" method="POST" novalidate>
+                        <div class="mb-3 mt-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" 
+                                class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'border-danger' : '' %>" 
+                                id="email" 
+                                placeholder="Enter email"
+                                name="email"
+                                value="<%= oldInput.email %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" 
+                                class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'border-danger' : '' %>" 
+                                id="password" 
+                                placeholder="Enter password"
+                                name="password"
+                                value="<%= oldInput.password %>">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-auto d-block m-auto">Đăng nhập</button>
+                    </form>
+                </article>
+            </div>
+        </main>
+<%- include('../includes/end.ejs') %>

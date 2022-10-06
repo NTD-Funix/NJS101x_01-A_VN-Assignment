@@ -1,0 +1,107 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="py-0">
+        <div class="grid">
+            <article class="card index-item">
+                <header class="card__header row pb-0">
+                    <%- include('../includes/navs.ejs')%>
+                </header>
+                <h4 class="text-center mb-4"><em>Bảng thông tin chi tiết giờ làm</em></h4>
+                <form class="row w-100" action="/workingInformation/time-info">
+                    <div class="col-md-2 m-auto text-center">
+                        <label for="sortValue" class="form-label m-0">Sắp xếp theo:</label>
+                    </div>
+                    <div class="col-md-4 my-2">
+                        <select class="form-select " id="sortValue" name="sortValue">
+                            <option selected disabled value="">---Theo ngày---</option>
+                            <option value=0 <%= sortValue === 0 ? 'selected' : '' %>>---Mặc định---</option>
+                            <option value=1 <%= sortValue === 1 ? 'selected' : '' %>>---Tăng dần---</option>
+                            <option value=-1 <%= sortValue === -1 ? 'selected' : '' %>>---Giảm dần---</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 my-2">
+                        <select class="form-select " id="pagination" name="pagination">
+                            <option selected disabled>---Số ngày hiển thị trên 1 trang---</option>
+                            <option value=10 <%= pagination === 10 ? 'selected' : '' %>>10</option>
+                            <option value=20 <%= pagination === 20 ? 'selected' : '' %>>20</option>
+                            <option value=30 <%= pagination === 30 ? 'selected' : '' %>>30</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 my-2 text-center">
+                        <button type="submit" class="btn btn-primary">Sắp xếp</button>
+                    </div>
+                </form>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="table-success text-center">
+                                <th>Ngày làm việc</th>
+                                <th>Nghỉ phép đã đăng ký</th>
+                                <th>Số giờ làm của ngày</th>
+                                <th>Số giờ làm thêm</th>
+                                <th>Thời gian bắt đầu</th>
+                                <th>Thời gian kết thúc</th>
+                                <th>Nơi làm việc</th>
+                                <th>Số giờ đã làm lần này</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% timeWorks.forEach(item => { %>
+                                <% if (item.workingTimes.length > 0) { %>
+                                    <tr class="text-center">
+                                        <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                            <%= item.dateTime %>
+                                        </td>
+                                        <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                            <%= item.annualLeaveOfDay %> Giờ
+                                        </td>
+                                        <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                            <%= item.totalTimeOfDay %> Giờ
+                                        </td>
+                                        <td rowspan="<%= item.workingTimes.length + 1 %>">
+                                            <%= item.overTime %> Giờ
+                                        </td>
+                                    </tr>
+                                    <% item.workingTimes.forEach(i => { %>
+                                    <tr class="text-center">
+                                        <td>
+                                            <%=i.startTime.toISOString().split('T')[1].split('.')[0]%>
+                                        </td>
+                                        <td><%= i.endTime ? i.endTime.toISOString().split('T')[1].split('.')[0] : '--' %>
+                                        </td>
+                                        <td><%= i.workPlace %></td>
+                                        <td><%= i.totalTime === 0 ? 
+                                            'Chưa kết thúc' : 
+                                            i.totalTime %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr class="text-center">
+                                        <td > <%= item.dateTime %></td>
+                                        <td ><%= item.annualLeaveOfDay %> Giờ</td>
+                                        <td ><%= item.totalTimeOfDay %> Giờ</td>
+                                        <td ><%= item.overTime %> Giờ</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+            <%- include('../includes/pagination.ejs') %>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>
+
+
